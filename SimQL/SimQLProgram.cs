@@ -31,13 +31,14 @@ namespace SimQLTask
 		            {
 		                result = result[s];
 		            }
+		            result = $"{query} = {result?.ToString().Replace(',', '.')}";
 
-                }
+		        }
 		        catch (Exception e)
 		        {
 		            result = "";
 		        }
-		        yield return $"{query} = {result?.ToString().Replace(',', '.')}";
+		        yield return result.ToString();
             }
 
 			//return queries.Select(q => "TODO");
