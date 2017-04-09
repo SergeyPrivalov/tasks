@@ -69,5 +69,19 @@ namespace SimQLTask
             Assert.AreEqual(3, result.Length);
             Assert.AreEqual(new[] {"sum(a.b.c) = 24", "min(z) = 2.65", "max(a.x) = 3.14"}, result);
         }
+
+        [Test]
+        public void ReturnValues_InBaseTestQL()
+        {
+            var str =
+                "{\"data\":{\"empty\":[],\"x\":[0.1,0.2,0.3],\"a\":[{\"b\":10,\"c\":[1,2,3]},{\"b\":30,\"c\":[4]},{\"d\":500}]}," +
+                "\"queries\":[\"sum(empty)\",\"sum(a.b)\",\"sum(a.c)\",\"sum(a.d)\",\"sum(x)\"]}";
+
+            var result = SimQLProgram.ExecuteQueries(str);
+
+            Assert.AreEqual(5, result.Count());
+            Assert.AreEqual(new[] { "sum(empty) = 0","sum(a.b) = 40", "sum(a.c) = 10", "sum(a.d) = 500", "sum(x) = 0.6" }, result);
+
+        }
     }
 }
