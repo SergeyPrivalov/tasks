@@ -18,7 +18,7 @@ namespace JsonConversion
                    id=int.Parse(product.Key),
                    count = product.Value.count,
                    name = product.Value.name,
-                   price = GetPrice(product.Value.price,jsonV2.constants )
+                   price = GetPrice(product.Value.price, jsonV2.constants )
                 });
             }
             return res;

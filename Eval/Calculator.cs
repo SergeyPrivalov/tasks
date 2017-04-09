@@ -129,8 +129,8 @@ namespace EvalTask
         public string Value => @"/";
         public Token Calculate(Token first, Token second)
         {
-            var firstNum = Double.Parse(first.Value);
-            var secondNum = Double.Parse(second.Value);
+            var firstNum = Double.Parse(first.Value, CultureInfo.InvariantCulture);
+            var secondNum = Double.Parse(second.Value, CultureInfo.InvariantCulture);
             var result = firstNum / secondNum;
             return Token.GetNumberToken(result);
         }

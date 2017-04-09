@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace EvalTask
 
         public static Token GetNumberToken(double value)
         {
-            return new Token() { Type = TokenType.Number, Value = value.ToString() };
+            return new Token() { Type = TokenType.Number, Value = value.ToString(CultureInfo.InvariantCulture) };
         }
 
         public Token()
@@ -41,6 +42,7 @@ namespace EvalTask
 
         public static List<Token> GetTokensFromString(string input)
         {
+            input = input.Replace(',', '.');
             var result = new List<Token>();
             var value = "";
             foreach (var t in input)

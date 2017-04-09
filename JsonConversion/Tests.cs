@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,7 @@ namespace JsonConversion
             };
             var dict = new Dictionary<string, double>();
             dict.Add("a", 2.2);
-            dict.Add("b", 2.23);
+            dict.Add("b", 2.5);
             var jsonV2 = new JsonV2()
             {
                 products = dictionary,
@@ -58,7 +59,7 @@ namespace JsonConversion
                     new List<Product2>()
                     {
                         new Product2() {id = 1, count = 1, price = 2, name = "fr"},
-                        new Product2() {id = 2, count = 2, price = 4.43, name = "frr"}
+                        new Product2() {id = 2, count = 2, price = 4.7, name = "frr"}
                     }
             };
             Assert.AreEqual(JsonConvert.SerializeObject(jsonV3), JsonConvert.SerializeObject(actual));
