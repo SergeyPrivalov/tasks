@@ -19,7 +19,7 @@ namespace EvalTask
 
 	}
 
-    class  Parser
+    partial class  Parser
     {
         private string operations = @"+-*/";
 
@@ -42,6 +42,8 @@ namespace EvalTask
             return result;
         }
     }
+    
+
 
     class  Calculator
     {
