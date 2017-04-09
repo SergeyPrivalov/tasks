@@ -31,8 +31,12 @@ namespace SimQLTask
 		            {
 		                result = result[s];
 		            }
-		            result = $"{query} = {result?.ToString().Replace(',', '.')}";
-
+		            if (result == null || query == "empty")
+		                result = $"{query}";
+		            else
+		            {
+		                result = $"{query} = {result?.ToString().Replace(',', '.')}";
+		            }
 		        }
 		        catch (Exception e)
 		        {
