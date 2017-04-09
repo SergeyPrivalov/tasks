@@ -21,8 +21,18 @@ namespace SimQLTask
 			var jObject = JObject.Parse(json);
 			var data = (JObject)jObject["data"];
 			var queries = jObject["queries"].ToObject<string[]>();
-			// TODO
-			return queries.Select(q => "TODO");
+		    foreach (var query in queries)
+		    {
+		        var path = query.Split('.');
+		        JToken result= data;
+		        foreach (var s in path)
+		        {
+		            result = result[s];
+		        }
+		        yield return $"{query} = {result.ToString().Replace(',','.')}";
+		    }
+
+			//return queries.Select(q => "TODO");
 		}
 	}
 }
