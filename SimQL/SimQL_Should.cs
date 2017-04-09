@@ -11,12 +11,6 @@ namespace SimQLTask
     [TestFixture]
     class SimQL_Should
     {
-        private SimQLProgram simQl;
-        [SetUp]
-        public void SetUp()
-        {
-            simQl = new SimQLProgram();
-        }
 
         [Test]
         public void ReturnData()
@@ -62,6 +56,18 @@ namespace SimQLTask
 
             Assert.AreEqual(5, result.Length);
             Assert.AreEqual(new [] {"empty", "xyz", "x1.x2", "y1.y2.z", "empty.foobar" }, result);
+        }
+
+        [Test]
+        public void ReturnValues_WhenGetArrays()
+        {
+            var str = "{'data': { 'a':{ 'x':3.14, 'b':[{'c':15}, {'c':9}]}, 'z':[2.65, 35]}," +
+                      "'queries': ['sum(a.b.c)','min(z)','max(a.x)']}";
+
+            var result = SimQLProgram.ExecuteQueries(str).ToArray();
+
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(new[] {"sum(a.b.c) = 24", "min(z) = 2.65", "max(a.x) = 3.14"}, result);
         }
     }
 }
