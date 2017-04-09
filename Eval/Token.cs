@@ -42,7 +42,7 @@ namespace EvalTask
 
         public static List<Token> GetTokensFromString(string input)
         {
-            input = input.Replace(',', '.');
+            input = input.Replace(',', '.').Replace(" ", "");
             var result = new List<Token>();
             var value = "";
             foreach (var t in input)

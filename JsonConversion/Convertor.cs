@@ -26,6 +26,7 @@ namespace JsonConversion
 
         private static double GetPrice(string price, Dictionary<string, double> constants)
         {
+
             var tokens =  Replacer.Replace(constants, Token.GetTokensFromString(price));
             return new Calculator().Calculate(tokens);
         }
