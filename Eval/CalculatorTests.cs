@@ -20,7 +20,11 @@ namespace EvalTask
         [Test]
         public void SumsTwoIntValues()
         {
-            List<string> input = new List<string>{"1", "+", "2"};
+            List<Token> input = new List<Token>{
+                new Token(TokenType.Number, "1"),
+                new Token(TokenType.Operation, "+"),
+                new Token(TokenType.Number, "2"),
+            };
 
             var res = calc.Calculate(input);
 
@@ -30,8 +34,12 @@ namespace EvalTask
         [Test]
         public void DividesTwoIntValues()
         {
-            List<string> input = new List<string>{"4", "/", "2"};
-
+            List<Token> input = new List<Token>{
+                new Token(TokenType.Number, "4"),
+                new Token(TokenType.Operation, "/"),
+                new Token(TokenType.Number, "2"),
+            };
+            
             var res = calc.Calculate(input);
 
             Assert.AreEqual(2,res);
@@ -40,7 +48,12 @@ namespace EvalTask
         [Test]
         public void MulipliesTwoIntValues()
         {
-            List<string> input = new List<string> { "4", "*", "2" };
+            List<Token> input = new List<Token>{
+                new Token(TokenType.Number, "4"),
+                new Token(TokenType.Operation, "*"),
+                new Token(TokenType.Number, "2"),
+            };
+            
             var res = calc.Calculate(input);
 
             Assert.AreEqual(8, res);
@@ -49,7 +62,11 @@ namespace EvalTask
         [Test]
         public void SubstractsTwoIntValues()
         {
-            List<string> input = new List<string> { "4", "-", "2" };
+            List<Token> input = new List<Token>{
+                new Token(TokenType.Number, "4"),
+                new Token(TokenType.Operation, "-"),
+                new Token(TokenType.Number, "2"),
+            };
             var res = calc.Calculate(input);
 
             Assert.AreEqual(2, res);
@@ -58,7 +75,7 @@ namespace EvalTask
         [Test]
         public void ReturnsNumberItself_OnOneItemInput()
         {
-            List<string> input = new List<string> { "1" };
+            var input = new List<Token> { new Token(TokenType.Number,"1") };
             var res = calc.Calculate(input);
 
             Assert.AreEqual(1, res);
@@ -67,9 +84,44 @@ namespace EvalTask
         [Test]
         public void ReturnsZero_IfEmptyInput()
         {
-            var res = calc.Calculate(new List<string>());
+            var res = calc.Calculate(new List<Token>());
 
             Assert.AreEqual(0, res);
+        }
+
+        [Test]
+        public void SumWithBrackets()
+        {
+            string input = "2+(2+2)";
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(6,res);
+        }
+
+        [Test]
+        public void ManyMultipliers()
+        {
+            string input = "1*2*3*4";
+
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(24, res);
+        }
+
+        [Test]
+        public void SumWithMultiplier()
+        {
+            string input = "2+2*2";
+
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(6, res);
         }
     }
 }

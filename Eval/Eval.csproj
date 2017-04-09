@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator.cs" />
     <Compile Include="EvalProgram.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserTests.cs" />

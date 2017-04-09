@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace EvalTask
@@ -10,22 +11,81 @@ namespace EvalTask
     [TestFixture]
     public class ParserTests_Should
     {
-        private Parser parser;
-        [SetUp]
-        public void SetUp()
+        
+        [Test]
+        public void TestParse()
         {
-            parser = new Parser();
+            var input = "2+3";
+            var actual = Token.GetTokensFromString(input);
+            var tokens = new List<Token>();
+            tokens.Add(new Token(TokenType.Number, "2"));
+            tokens.Add(new Token(TokenType.Operation, "+"));
+            tokens.Add(new Token(TokenType.Number, "3"));
+            Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
         }
-
 
         [Test]
-        public void ReturnsSingleNumber_IfSungleNumberInInput()
+        public void TestParse1()
         {
-            string input = "1";
-            var expected = new List<string>() {"1"};
-            var res = parser.Parse(input);
-
-            CollectionAssert.AreEqual(expected, res);
+            var input = "abc*a";
+            var actual = Token.GetTokensFromString(input);
+            var tokens = new List<Token>();
+            tokens.Add(new Token(TokenType.Constant, "abc"));
+            tokens.Add(new Token(TokenType.Operation, "*"));
+            tokens.Add(new Token(TokenType.Constant, "a"));
+            Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
         }
+
+             [Test]
+             public void ParseWithBrackets()
+             {
+                 var input = "(2+3)";
+                 var actual = Token.GetTokensFromString(input);
+                 var tokens = new List<Token>();
+                 tokens.Add(new Token(TokenType.OpenBracket, "("));
+                 tokens.Add(new Token(TokenType.Number, "2"));
+                 tokens.Add(new Token(TokenType.Operation, "+"));
+                 tokens.Add(new Token(TokenType.Number, "3"));
+                 tokens.Add(new Token(TokenType.CloseBracket, ")"));
+                 Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
+             }
+
+             [Test]
+             public void ParseWithConstant()
+             {
+                 var input = "a+3";
+                 var actual = Token.GetTokensFromString(input);
+                 var tokens = new List<Token>();
+                 tokens.Add(new Token(TokenType.Constant, "a"));
+                 tokens.Add(new Token(TokenType.Operation, "+"));
+                 tokens.Add(new Token(TokenType.Number, "3"));
+                 Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
+             }
+
+        [Test]
+        public void floatNumber()
+        {
+            var input = "a+3.4";
+            var actual = Token.GetTokensFromString(input);
+            var tokens = new List<Token>();
+            tokens.Add(new Token(TokenType.Constant, "a"));
+            tokens.Add(new Token(TokenType.Operation, "+"));
+            tokens.Add(new Token(TokenType.Number, "3.4"));
+            Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
+        }
+
+        [Test]
+        public void NegativeNumber()
+        {
+            var input = "-3+3.4";
+            var actual = Token.GetTokensFromString(input);
+            var tokens = new List<Token>();
+            tokens.Add(new Token(TokenType.Operation, "-"));
+            tokens.Add(new Token(TokenType.Number, "3"));
+            tokens.Add(new Token(TokenType.Operation, "+"));
+            tokens.Add(new Token(TokenType.Number, "3.4"));
+            Assert.AreEqual(JsonConvert.SerializeObject(actual), JsonConvert.SerializeObject(tokens));
+        }
+
     }
 }
