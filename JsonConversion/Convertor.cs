@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using EvalTask;
 namespace JsonConversion
 {
     public  class Convertor
@@ -18,10 +18,16 @@ namespace JsonConversion
                    id=int.Parse(product.Key),
                    count = product.Value.count,
                    name = product.Value.name,
-                   price = product.Value.price
+                   price = GetPrice(product.Value.price,jsonV2.constants )
                 });
             }
             return res;
+        }
+
+        private static double GetPrice(string price, Dictionary<string, double> constants)
+        {
+            var tokens =  Replacer.Replace(constants, Token.GetTokensFromString(price));
+            return new Calculator().Calculate(tokens);
         }
     }
 }
