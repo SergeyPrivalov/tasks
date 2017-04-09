@@ -10,7 +10,9 @@ namespace EvalTask
     {
         Operation,
         Number,
-        Constant
+        Constant,
+        OpenBracket,
+        CloseBracket
     }
 
     public class Token
