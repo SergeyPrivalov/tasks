@@ -42,6 +42,7 @@ namespace SimQLTask
 	                {
 	                    results = results.SelectMany(x => MakeStepIntoStruck(x, s)).ToList();
 	                }
+	                results = results.Where(x => x != null).ToList();
 	                if (results.Count == 1 && results.First().Type != JTokenType.Array)
 	                {
 	                    var elemenet = results.First();
@@ -50,14 +51,26 @@ namespace SimQLTask
 	                        result = $"{query} = {elemenet.ToString().Replace(',', '.')}";
 	                    }
 	                }
-	                else if (results.First().Type == JTokenType.Array)
+	                else if (results.Count == 1 && results.First().Type == JTokenType.Array)
 	                {
 	                   var array = results.First().Children().ToList();
 	                    result = $"{query} = {commandDictionary[splitedQuery.Item2](array).ToString().Replace(',','.')}";
 	                }
 	                else if (results.Count > 1)
 	                {
-	                    result = $"{query} = {commandDictionary[splitedQuery.Item2](results)}";
+	                    var allListElements = new List<JToken>();
+	                    foreach (var r in results)
+	                    {
+	                        if (r.Type == JTokenType.Array)
+	                        {
+	                            allListElements.AddRange(r.Children().ToList());
+	                        }
+	                        else
+	                        {
+	                            allListElements.Add(r);
+	                        }
+	                    }
+	                    result = $"{query} = {commandDictionary[splitedQuery.Item2](allListElements)}";
 	                }
 
 	            }
