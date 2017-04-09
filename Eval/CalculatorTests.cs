@@ -100,5 +100,28 @@ namespace EvalTask
             Assert.AreEqual(6,res);
         }
 
+        [Test]
+        public void ManyMultipliers()
+        {
+            string input = "1*2*3*4";
+
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(24, res);
+        }
+
+        [Test]
+        public void SumWithMultiplier()
+        {
+            string input = "2+2*2";
+
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(6, res);
+        }
     }
 }

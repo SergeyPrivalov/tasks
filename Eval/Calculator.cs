@@ -73,7 +73,7 @@ namespace EvalTask
                     var index = operations.FindIndex(op => op.Value == tokens[i].Value);
                     if (index != -1)
                     {
-                        result[result.Count-1] = operations[index].Calculate(tokens[i - 1], tokens[i + 1]);
+                        result[result.Count-1] = operations[index].Calculate(result[result.Count - 1], tokens[i + 1]);
                         i++;
                         continue;
                     }
@@ -104,15 +104,15 @@ namespace EvalTask
                     var index = operations.FindIndex(op => op.Value == tokens[i].Value);
                     if (index != -1)
                     {
-                        result = Double.Parse(operations[index].Calculate(Token.GetNumberToken(result), tokens[i + 1]).Value);
+                        result = Double.Parse(operations[index].Calculate(Token.GetNumberToken(result), tokens[i + 1]).Value, CultureInfo.InvariantCulture);
                         i++;
                     }
                     else
-                        result += Double.Parse(tokens[i].Value);
+                        result += Double.Parse(tokens[i].Value, CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    result += Double.Parse(tokens[i].Value);
+                    result += Double.Parse(tokens[i].Value, CultureInfo.InvariantCulture);
                 }
             }
             return result;
@@ -141,8 +141,8 @@ namespace EvalTask
         public string Value => @"*";
         public Token Calculate(Token first, Token second)
         {
-            var firstNum = Double.Parse(first.Value);
-            var secondNum = Double.Parse(second.Value);
+            var firstNum = Double.Parse(first.Value, CultureInfo.InvariantCulture);
+            var secondNum = Double.Parse(second.Value, CultureInfo.InvariantCulture);
             var result = firstNum * secondNum;
             return Token.GetNumberToken(result);
         }
@@ -153,8 +153,8 @@ namespace EvalTask
         public string Value => @"+";
         public Token Calculate(Token first, Token second)
         {
-            var firstNum = Double.Parse(first.Value);
-            var secondNum = Double.Parse(second.Value);
+            var firstNum = Double.Parse(first.Value, CultureInfo.InvariantCulture);
+            var secondNum = Double.Parse(second.Value, CultureInfo.InvariantCulture);
             var result = firstNum + secondNum;
             return Token.GetNumberToken(result);
         }
@@ -165,8 +165,8 @@ namespace EvalTask
         public string Value => @"-";
         public Token Calculate(Token first, Token second)
         {
-            var firstNum = Double.Parse(first.Value);
-            var secondNum = Double.Parse(second.Value);
+            var firstNum = Double.Parse(first.Value, CultureInfo.InvariantCulture);
+            var secondNum = Double.Parse(second.Value, CultureInfo.InvariantCulture);
             var result = firstNum - secondNum;
             return Token.GetNumberToken(result);
         }
