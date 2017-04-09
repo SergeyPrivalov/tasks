@@ -30,7 +30,8 @@ namespace EvalTask
             Value = value;
         }
 
-        public const string operations = @"+-*/";
+        public const string Operations = @"+-*/";
+        public const string Brackets = @"()";
 
         public static List<Token> GetTokensFromString(string input)
         {
@@ -38,17 +39,30 @@ namespace EvalTask
             var value = "";
             foreach (var t in input)
             {
-                if (!operations.Contains(t.ToString()))
+                if (!Operations.Contains(t.ToString()) && !Brackets.Contains(t.ToString()))
                     value += t;
                 else
                 {
-                    result.Add(char.IsDigit(value[0])
+                    if (value != "")
+                        result.Add(char.IsDigit(value[0])
                         ? new Token(TokenType.Number, value)
                         : new Token(TokenType.Constant, value));
-                    result.Add(new Token() {Type = TokenType.Operation, Value = t.ToString()});
+                    switch (t)
+                    {
+                        case '(':
+                            result.Add(new Token() {Type = TokenType.OpenBracket, Value = t.ToString()});
+                            break;
+                        case ')':
+                            result.Add(new Token() {Type = TokenType.CloseBracket, Value = t.ToString()});
+                            break;
+                        default:
+                            result.Add(new Token() {Type = TokenType.Operation, Value = t.ToString()});
+                            break;
+                    }
                     value = "";
                 }
             }
+            if (value!="")
             result.Add(char.IsDigit(value[0])
                 ? new Token(TokenType.Number, value)
                 : new Token(TokenType.Constant, value));
