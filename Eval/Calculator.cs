@@ -29,9 +29,17 @@ namespace EvalTask
             for (int i = 0; i < tokens.Count; i++)
             {
                 if (tokens[i].Type == TokenType.OpenBracket)
+                {
                     bracketCounter++;
+                    continue;
+                }
                 if (tokens[i].Type == TokenType.CloseBracket)
                     bracketCounter--;
+                if (bracketCounter == 0 && inbracketValues.Count != 0)
+                {
+                    nonBracketValue.Add(new Token(TokenType.Number, Calculate(inbracketValues).ToString()));
+                    continue;
+                }
 
                 if (bracketCounter > 0)
                 {
@@ -41,8 +49,6 @@ namespace EvalTask
                 {
                     nonBracketValue.Add(tokens[i]);
                 }
-                if (bracketCounter == 0 && inbracketValues.Count != 0)
-                    Calculate(inbracketValues);
             }
             var withoutHighPriority = highPriorityCalculator.Calculate(nonBracketValue);
             return lowPriorityCalculator.Calculate(withoutHighPriority);

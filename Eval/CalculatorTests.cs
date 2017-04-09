@@ -88,6 +88,17 @@ namespace EvalTask
 
             Assert.AreEqual(0, res);
         }
-        
+
+        [Test]
+        public void SumWithBrackets()
+        {
+            string input = "2+(2+2)";
+            var actual = Token.GetTokensFromString(input);
+
+            var res = calc.Calculate(actual);
+
+            Assert.AreEqual(6,res);
+        }
+
     }
 }
