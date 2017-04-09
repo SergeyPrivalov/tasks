@@ -58,9 +58,10 @@ namespace SimQLTask
             var str = "{\"data\":{\"empty\":{},\"ab\":0,\"x1\":1,\"x2\":2,\"y1\":{\"y2\":{\"y3\":3}}}," +
                       "\"queries\":[\"empty\",\"xyz\",\"x1.x2\",\"y1.y2.z\",\"empty.foobar\"]}";
 
-            var result = SimQLProgram.ExecuteQueries(str);
+            var result = SimQLProgram.ExecuteQueries(str).ToArray();
 
-            Assert.AreEqual(5, result.Count());
+            Assert.AreEqual(5, result.Length);
+            Assert.AreEqual(new [] {"empty", "xyz", "x1.x2", "y1.y2.z", "empty.foobar" }, result);
         }
     }
 }
