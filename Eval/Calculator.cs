@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EvalTask
 {
-    class Calculator
+    public class Calculator
     {
         private HighPriorityCalculator highPriorityCalculator;
         private LowPriorityCalculator lowPriorityCalculator;
