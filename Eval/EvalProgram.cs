@@ -54,6 +54,8 @@ namespace EvalTask
 
         public double Calculate(List<string> input)
         {
+            if (input.Count == 0)
+                return 0;
             if (input.Count == 1)
                 return Double.Parse(input[0]);
             var operation = operations.Where(o => o.Sign == input[1]).FirstOrDefault();

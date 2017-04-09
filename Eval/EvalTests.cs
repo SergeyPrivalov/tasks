@@ -63,5 +63,13 @@ namespace EvalTask
 
             Assert.AreEqual(0, res);
         }
+
+        [Test]
+        public void ReturnsZero_IfEmptyInput()
+        {
+            var res = calc.Calculate(new List<string>());
+
+            Assert.AreEqual(0, res);
+        }
     }
 }
