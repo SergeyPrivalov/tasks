@@ -18,5 +18,21 @@ namespace EvalTask
     {
         public TokenType Type { get; set; }
         public string Value { get; set; }
+
+        public static Token GetNumberToken(double value)
+        {
+            return new Token() { Type = TokenType.Number, Value = value.ToString() };
+        }
+
+        public Token()
+        {
+        }
+
+        public Token(TokenType type, string value)
+        {
+            Type = type;
+            Value = value;
+        }
     }
+
 }
