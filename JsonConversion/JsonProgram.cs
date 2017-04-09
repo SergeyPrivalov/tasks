@@ -8,11 +8,11 @@ namespace JsonConversion
 	{
 		static void Main()
 		{
-			var json = Console.In.ReadToEnd();
-			var v2 = JsonConvert.DeserializeObject<JsonV2>(json);
+			string json = Console.In.ReadToEnd();
+			JsonV2 v2 = JsonConvert.DeserializeObject<JsonV2>(json);
 			//...
 			var v3 = Convertor.Convert(v2);
-			Console.Write(v3);
+			Console.Write(JsonConvert.SerializeObject(v3));
 		}
 	}
 }
