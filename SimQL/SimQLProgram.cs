@@ -12,7 +12,7 @@ namespace SimQLTask
 		static void Main(string[] args)
 		{
 			var json = Console.In.ReadToEnd();
-			foreach (var result in ExecuteQueries(json))
+			foreach (var result in ExecuteQueries(json).ToArray())
 				Console.WriteLine(result);
 		}
 
@@ -21,8 +21,27 @@ namespace SimQLTask
 			var jObject = JObject.Parse(json);
 			var data = (JObject)jObject["data"];
 			var queries = jObject["queries"].ToObject<string[]>();
-			// TODO
-			return queries.Select(q => "TODO");
+		    foreach (var query in queries)
+		    {
+		        var path = query.Split('.');
+		        JToken result= data;
+		        try
+		        {
+		            foreach (var s in path)
+		            {
+		                result = result[s];
+		            }
+		            result = $"{query} = {result?.ToString().Replace(',', '.')}";
+
+		        }
+		        catch (Exception e)
+		        {
+		            result = $"{query}";
+		        }
+		        yield return result.ToString();
+            }
+
+			//return queries.Select(q => "TODO");
 		}
 	}
 }
