@@ -54,5 +54,14 @@ namespace EvalTask
 
             Assert.AreEqual(2, res);
         }
+
+        [Test]
+        public void ReturnsNumberItself_OnOneItemInput()
+        {
+            List<string> input = new List<string> { "0" };
+            var res = calc.Calculate(input);
+
+            Assert.AreEqual(0, res);
+        }
     }
 }
