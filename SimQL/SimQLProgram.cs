@@ -36,7 +36,7 @@ namespace SimQLTask
 		        }
 		        catch (Exception e)
 		        {
-		            result = "";
+		            result = $"{query}";
 		        }
 		        yield return result.ToString();
             }
