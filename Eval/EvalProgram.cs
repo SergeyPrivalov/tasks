@@ -10,12 +10,10 @@ namespace EvalTask
 		static void Main(string[] args)
 		{
 			string input = Console.In.ReadToEnd();
-            //var parser = new Parser();
-		 //   var numbersWithOperations = parser.Parse(input);
-            
-   //         var calculator = new Calculator();
-			//Console.WriteLine(calculator.Calculate(numbersWithOperations));
-		}
+            var actual = Token.GetTokensFromString(input);
+            Calculator calc = new Calculator();
+            Console.WriteLine(calc.Calculate(actual));
+        }
 
-	}
+    }
 }
