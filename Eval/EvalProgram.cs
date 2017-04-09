@@ -38,6 +38,7 @@ namespace EvalTask
                     number = "";
                 }
             }
+            result.Add(number);
             return result;
         }
     }

@@ -58,10 +58,10 @@ namespace EvalTask
         [Test]
         public void ReturnsNumberItself_OnOneItemInput()
         {
-            List<string> input = new List<string> { "0" };
+            List<string> input = new List<string> { "1" };
             var res = calc.Calculate(input);
 
-            Assert.AreEqual(0, res);
+            Assert.AreEqual(1, res);
         }
 
         [Test]
