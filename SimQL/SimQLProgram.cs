@@ -35,7 +35,7 @@ namespace SimQLTask
                 }
 		        catch (Exception e)
 		        {
-		            result = null;
+		            result = "";
 		        }
 		        yield return $"{query} = {result?.ToString().Replace(',', '.')}";
             }
